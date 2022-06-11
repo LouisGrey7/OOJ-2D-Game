@@ -1,106 +1,143 @@
 #include "Game.h"
 
-//Static Functions
-
 
 //Initializer Functions
 void Game::InitWindow()
 {
 
-	std::ifstream ifs("Config/window.ini");
-
-
-	std::string title = "None";
-	sf::VideoMode window_bounds(800, 600);
-	unsigned framerate_limit = 120;
-	bool vertical_sync_enabled = false;
-
-	if (ifs.is_open())
-	{
-		std::getline(ifs, title);
-		ifs >> window_bounds.width >> window_bounds.height;
-		ifs >> framerate_limit;
-		ifs >> vertical_sync_enabled;
-	}
-
-	ifs.close();
-
-	this->window = new sf::RenderWindow(window_bounds, title);
-	this->window->setFramerateLimit(framerate_limit);
-	this->window->setVerticalSyncEnabled(vertical_sync_enabled);
+	sf::VideoMode windowBounds(1280, 720);
+	unsigned framerateLimit = 120;
+	
+	this->window = new sf::RenderWindow(windowBounds, "SFML Platformer");
+	this->window->setFramerateLimit(framerateLimit);
+	this->window->setVerticalSyncEnabled(true);
 
 }
 
-void Game::InitStates()
-{
-	this->states.push(new GameState(this->window));
-}
 
 //Constructor/Destructors
 Game::Game()
 {
 	this->InitWindow();
-	this->InitStates();
+	newScene = new Scene(128, 72);
+	if (currentLevel == 1)
+	{
+		newScene->LoadScene("Scenes/Scene1.txt");
+		SpawnEnemies();
+	}
+
+	
 }
 
 Game::~Game()
 {
 	delete this->window;
 
-	while (!this->states.empty())
+}
+
+void Game::SpawnEnemies()
+{
+	for (int i = 0; i < newScene->m_enemySpawnTiles.size(); ++i)
 	{
-		delete this->states.top();
-		this->states.pop();
+		enemies.push_back(new Enemies);
+		enemies[i]->EnemyGetShape()->setPosition(newScene->m_enemySpawnTiles[i]->tileShape->getPosition());
 	}
 
 }
 
-//Functions
-
-void Game::EndApplication()
+void Game::UnspawnEnemies()
 {
-	std::cout << "Ending Application" << "\n";
+	enemies.clear();
 }
+
+//Update
 
 void Game::UpdateDt()
 {
 	//updates the delta time variable
-	this->dt = this->dtClock.restart().asSeconds();
+	this->dt = dtClock.getElapsedTime().asSeconds();
+	this->dtClock.restart();
 
 }
 
-void Game::UpdateSFMLEvents()
+
+void Game::Update()
 {
+
+	
 	while (this->window->pollEvent(this->event))
 	{
+		//Exit Game
 		if (this->event.type == sf::Event::Closed)
 		{
 			this->window->close();
 		}
-	}
-
-}
-
-void Game::Update()
-{
-	this->UpdateSFMLEvents();
-
-	if (!this->states.empty())
-	{
-		this->states.top()->Update(this->dt);
-
-		if (this->states.top()->getQuit())
+		if (event.type == sf::Event::KeyPressed)
 		{
-			this->states.top()->EndState();
-			delete this->states.top();
-			this->states.pop();
+			//Enable gravity
+			if (event.key.code == sf::Keyboard::E)
+			{
+				gravityEnabled = !gravityEnabled;
+				std::cout << "gravityenabled" << gravityEnabled;
+			}
+			if (event.key.code == sf::Keyboard::L)
+			{
+				
+				currentLevel = 2;
+				newScene->UnloadScene();
+				UnspawnEnemies();
+				if (currentLevel == 2)
+				{
+					newScene->LoadScene("Scenes/Scene2.txt");
+					SpawnEnemies();
+				}
+			}
+			//Jump
+			if (event.key.code == sf::Keyboard::Space)
+			{
+				if (newCharacter.currentJumpCount > 0)
+				{
+					newCharacter.GetCharacterShape()->move(sf::Vector2f(0.0f, -1.5f));
+					newCharacter.charYVelocity = newCharacter.jumpHeight;
+
+					newCharacter.currentJumpCount--;
+					std::cout << "jump \n";
+				}
+			}
 		}
 	}
-	//Application end
-	else
+
+	//Win Tile Collision change level
+	if (newScene->m_winTile->tileShape->getGlobalBounds().intersects(newCharacter.GetCharacterShape()->getGlobalBounds()))
 	{
-		this->EndApplication();
-		this->window->close();
+		std::cout << "hit \n";		
+		newScene->UnloadScene();
+		UnspawnEnemies();
+		newScene->LoadScene("Scenes/Scene2.txt");
+		SpawnEnemies();
+	}
+
+	//Character
+	newCharacter.Update(dt, newScene->m_levelWallColliders);
+
+	//Enemy
+	for (auto* enemy : enemies)
+	{
+		enemy->Update(dt, newCharacter.GetCharacterPosition().x, newCharacter.GetCharacterPosition().y, newScene->m_levelWallColliders, newScene->m_patrolCollideTiles);
+	}
+	//Camera
+	newCamera.Update(window, newCharacter.GetCharacterPosition());
+
+	//UI
+	newUI.Update(newCharacter.characterHealth, newCamera.playerCamera->getCenter());
+
+
+	//Physics
+	newPhysicsSystem.UpdateDynamicObject(&newCharacter, dt, gravityEnabled);
+
+	for (auto* enemy : enemies)
+	{
+		newPhysicsSystem.UpdateDynamicEnemy(enemy, dt, gravityEnabled);
 	}
 }
 
@@ -108,9 +145,15 @@ void Game::Render()
 {
 	this->window->clear();
 
-	//render items
-	if (!this->states.empty())
-		this->states.top()->Render(this->window);
+	
+	newScene->Render(window);
+	this->newCharacter.Render(window);
+	for (auto* enemy : enemies)
+	{
+		enemy->Render(window);
+	}
+	newUI.Render(window);
+
 
 	this->window->display();
 }
@@ -121,6 +164,8 @@ void Game::Run()
 	{
 		this->UpdateDt();
 		this->Update();
+
+
 		this->Render();
 	}
 }

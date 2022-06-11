@@ -4,8 +4,9 @@
 
 int main()
 {
-    Game game;
+	Game newGame;
 
-    game.Run();
-    
+	newGame.Run();
+
+	return 0;
 }

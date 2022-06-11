@@ -1,9 +1,20 @@
-#ifndef GAME_H
-#define GAME_H
+#pragma once
 
-#include "GameState.h"
+#include "SFML/Graphics.hpp"
+#include "SFML/System.hpp"
+#include "SFML/Window.hpp"
+#include "SFML/Audio.hpp"
+#include "SFML/Network.hpp"
 
+#include <iostream>
+#include <ctime>
 
+#include "Character.h"
+#include "Camera.h"
+#include "Scene.h"
+#include "PhysicsSystem.h"
+#include "Enemies.h"
+#include "UI.h"
 
 class Game
 {
@@ -11,29 +22,38 @@ private:
 	//Variables
 	sf::RenderWindow* window;
 	sf::Event event;
-
 	sf::Clock dtClock;
-	float dt;
+	float dt = 0.0f;
+	bool gravityEnabled = true;
+	int currentLevel = 1;
 
+	Character newCharacter;
 
-	std::stack<State*> states;
+	std::vector<Enemies*> enemies;
+
+	UI newUI;
+
+	Camera newCamera;
+	
+	Scene* newScene;
+
+	PhysicsSystem newPhysicsSystem;
 
 	//Initialization
 	void InitWindow();
-	void InitStates();
 
 
 public:
-
 	//Constructor/Destructors
 	Game();
 	virtual ~Game();
 
 	//Functions
-	void EndApplication();
+	void SpawnEnemies();
+	void UnspawnEnemies();
+
 	//Update
 	void UpdateDt();
-	void UpdateSFMLEvents();
 	void Update();
 
 	//Render
@@ -41,7 +61,8 @@ public:
 
 	//Run
 	void Run();
+
+	//Accessors
+	
 };
 
-
-#endif
