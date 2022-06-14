@@ -6,7 +6,6 @@ class Camera
 public:
 
 	//Variables
-	sf::Vector2f playerCameraPosition;
 	sf::View* playerCamera;
 
 	//Constructor and Destructor

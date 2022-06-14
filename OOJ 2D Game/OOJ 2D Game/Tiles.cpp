@@ -43,6 +43,12 @@ Tiles::Tiles(TileType _type)
 		tileShape->setFillColor(sf::Color::Cyan);
 		break;
 	case TILE_ENEMYSPAWN:
+		tileShape->setFillColor(sf::Color::Cyan);
+		break;
+	case TILE_CHARSPAWNTILE:
+		tileShape->setFillColor(sf::Color::Cyan);
+		break;
+	case TILE_KILLTILE:
 		tileShape->setFillColor(sf::Color::Red);
 		break;
 	default:

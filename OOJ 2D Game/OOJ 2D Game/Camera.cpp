@@ -2,7 +2,7 @@
 
 Camera::Camera()
 {
-	playerCamera = new sf::View(sf::Vector2f(640, 360), sf::Vector2f(1280, 720));
+	playerCamera = new sf::View(sf::Vector2f(960, 540), sf::Vector2f(1920, 1080));
 	playerCamera->setSize(1920, 1080);
 }
 
@@ -18,8 +18,8 @@ void Camera::Update(sf::RenderTarget* _window, sf::Vector2f _center)
 
 void Camera::SetView(sf::RenderTarget* _window, sf::Vector2f _center)
 {
-	_window->setView(*playerCamera);
 	playerCamera->setCenter(_center);
+	_window->setView(*playerCamera);
 }
 
 

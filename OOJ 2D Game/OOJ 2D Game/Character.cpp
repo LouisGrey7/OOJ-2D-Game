@@ -4,7 +4,7 @@ void Character::InitCharacter()
 {
 	charShape = new sf::RectangleShape(charSize);
 	charShape->setFillColor(sf::Color::White);
-	charShape->setPosition(150.0f, 1250.0f);
+	charShape->setPosition(200.0f, 1250.0f);
 	charShape->setOrigin(charSize.x / 2, charSize.y / 2);
 
 	charTex.loadFromFile("Sprites/MainCharacter.png");
@@ -34,6 +34,7 @@ void Character::Move(float _dt, std::vector<sf::FloatRect> _Collisions)
 		{
 			colliding = true;
 			charYVelocity = 0.0f;
+			charXVelocity = 0.0f;
 			currentJumpCount = maxJumpCount;
 			Collisions::ResolveYCollision(charShape, _Collisions[i], true);
 		}
@@ -56,6 +57,7 @@ void Character::Move(float _dt, std::vector<sf::FloatRect> _Collisions)
 
 }
 
+
 void Character::CharacterInputUpdate(float _dt, std::vector<sf::FloatRect> _Collisions)
 {
 	charMoveVec = sf::Vector2f(0.0f, 0.0f);
@@ -73,12 +75,12 @@ void Character::CharacterInputUpdate(float _dt, std::vector<sf::FloatRect> _Coll
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
 	{
 		charMoveVec.x = -1.0f;
-
+		dashDistance = -10.0f;
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
 	{
 		charMoveVec.x = 1.0f;
-		
+		dashDistance = 10.0f;
 	}
 	
 	Move(_dt, _Collisions);
@@ -88,8 +90,6 @@ void Character::Update(float _dt, std::vector<sf::FloatRect> _Collisions)
 {
 	CharacterInputUpdate(_dt, _Collisions);
 	charPos = charShape->getPosition();
-
-
 }
 
 void Character::Render(sf::RenderTarget* _window)

@@ -1,21 +1,19 @@
 #pragma once
 #include "SFML/Graphics.hpp"
 
+#include <iostream>
+
 class UI
 {
 private:
-	//Variables
-	sf::RectangleShape* healthCounter;
-
-	std::vector<sf::RectangleShape*> healthCounterVec;
-
-	sf::Texture healthCounterTex;
-
-	//Initialization
-
 
 
 public:
+
+	//Variables
+
+	//Initialization
+	
 
 	//Constructor/Destructors
 
@@ -23,14 +21,15 @@ public:
 	~UI();
 
 	//Functions
-
+	
 
 	//Update
-	void Update(int _currentHealth, sf::Vector2f _camerapos);
+	void Update();
 
 	//Render
 	void Render(sf::RenderTarget* _window);
 
 	//Accessors
+
 };
 

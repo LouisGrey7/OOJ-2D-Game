@@ -15,6 +15,7 @@
 #include "PhysicsSystem.h"
 #include "Enemies.h"
 #include "UI.h"
+#include "GameState.h"
 
 class Game
 {
@@ -26,12 +27,12 @@ private:
 	float dt = 0.0f;
 	bool gravityEnabled = true;
 	int currentLevel = 1;
+	
+	GameState* newGameState;
 
 	Character newCharacter;
 
 	std::vector<Enemies*> enemies;
-
-	UI newUI;
 
 	Camera newCamera;
 	
@@ -51,6 +52,10 @@ public:
 	//Functions
 	void SpawnEnemies();
 	void UnspawnEnemies();
+	void SpawnChar();
+	void KillTile();
+	void WinTile();
+	
 
 	//Update
 	void UpdateDt();

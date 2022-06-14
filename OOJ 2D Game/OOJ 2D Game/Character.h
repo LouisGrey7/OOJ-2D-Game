@@ -1,9 +1,6 @@
 #pragma once
+
 #include "SFML/Graphics.hpp"
-#include "SFML/System.hpp"
-#include "SFML/Window.hpp"
-#include "SFML/Audio.hpp"
-#include "SFML/Network.hpp"
 
 #include <iostream>
 
@@ -14,8 +11,6 @@ class Character
 private:
 	//Variables
 	sf::RectangleShape* charShape;
-
-
 	sf::Vector2f charSize = sf::Vector2f(80.0f,80.0f);
 	sf::Vector2f charMoveVec = sf::Vector2f(0.0f, 0.0f);
 	sf::Vector2f charPos = sf::Vector2f(0.0f, 0.0f);
@@ -29,12 +24,13 @@ private:
 
 public:
 	float charSpeed = 300;
-	int characterHealth = 3;
 	bool colliding = false;
 	float charYVelocity = 0.0f;
-	float jumpHeight = -10.0f;
-	float currentJumpCount = 3;
-	float maxJumpCount = 3;
+	float charXVelocity = 0.0f;
+	float jumpHeight = -12.0f;
+	float dashDistance = 10.0;
+	float currentJumpCount = 2;
+	float maxJumpCount = 2;
 
 	//Constructor/Destructors
 	Character();
@@ -42,6 +38,8 @@ public:
 
 	//Functions
 	void Move(float _dt, std::vector<sf::FloatRect> _Collisions);
+	
+	
 
 	//Update
 	void CharacterInputUpdate(float _dt, std::vector<sf::FloatRect> _Collisions);

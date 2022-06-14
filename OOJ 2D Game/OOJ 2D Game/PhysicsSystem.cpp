@@ -21,6 +21,7 @@ void PhysicsSystem::UpdateDynamicObject(Character* _playerChar, float _dt, bool 
 			
 
 			_playerChar->GetCharacterShape()->move(sf::Vector2f(0, _playerChar->charYVelocity));
+			_playerChar->GetCharacterShape()->move(sf::Vector2f(_playerChar->charXVelocity, 0));
 		}
 	}
 }

@@ -150,6 +150,7 @@
     <ClCompile Include="Collisions.cpp" />
     <ClCompile Include="Enemies.cpp" />
     <ClCompile Include="Game.cpp" />
+    <ClCompile Include="GameState.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="PhysicsSystem.cpp" />
     <ClCompile Include="Scene.cpp" />
@@ -162,6 +163,7 @@
     <ClInclude Include="Collisions.h" />
     <ClInclude Include="Enemies.h" />
     <ClInclude Include="Game.h" />
+    <ClInclude Include="GameState.h" />
     <ClInclude Include="PhysicsSystem.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="Tiles.h" />

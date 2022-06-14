@@ -18,8 +18,9 @@ public:
 	static const int m_levelWidth = 100;
 	static const int m_levelHeight = 100;
 
-	std::vector<Tiles*> m_levelWallTiles;
+	std::vector<Tiles*> m_levelTiles;
 	std::vector<Tiles*> m_enemySpawnTiles;
+	std::vector<Tiles*> m_killTiles;
 
 
 	char levelArray[m_levelWidth][m_levelHeight];
@@ -29,6 +30,7 @@ public:
 
 	Tiles* newTile;
 	Tiles* m_winTile;
+	Tiles* charSpawnTile;
 
 	//Initialization
 
