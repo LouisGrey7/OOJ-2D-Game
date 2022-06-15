@@ -43,10 +43,14 @@ public:
 	~GameState();
 
 	//Functions
-	void Render(sf::RenderWindow* _window);
+	void CreateMenu(sf::Vector2f _centerScreen);
+
+	//Update
 	void Update(sf::RenderWindow* _window, sf::Vector2f _camerapos);
-	void WinScreenRender(sf::RenderWindow* _window);
 	void WinScreenUpdate(sf::RenderWindow* _window, sf::Vector2f _centerScreen);
 
+	//Render
+	void Render(sf::RenderWindow* _window);
+	void WinScreenRender(sf::RenderWindow* _window);
 };
 

@@ -2,7 +2,20 @@
 
 GameState::GameState(sf::Vector2f _centerScreen)
 {
+	CreateMenu(_centerScreen);
 
+}
+
+GameState::~GameState()
+{
+	for (int i = 0; i < m_UIElements.size(); i++)
+	{
+		delete this->m_UIElements[i];
+	}
+}
+
+void GameState::CreateMenu(sf::Vector2f _centerScreen)
+{
 	if (m_buttonTex.loadFromFile("Sprites/MenuButton.png"))
 	{
 	}
@@ -15,7 +28,7 @@ GameState::GameState(sf::Vector2f _centerScreen)
 	{
 	}
 
-	background = new sf::RectangleShape(sf::Vector2f(2000.0f,2000.0f));
+	background = new sf::RectangleShape(sf::Vector2f(2000.0f, 2000.0f));
 	background->setFillColor(sf::Color::Cyan);
 	background->setOrigin(sf::Vector2f(1000.0f, 1000.0f));
 
@@ -60,31 +73,8 @@ GameState::GameState(sf::Vector2f _centerScreen)
 	m_UITextElements[4].setString("Back");
 }
 
-GameState::~GameState()
-{
-	for (int i = 0; i < m_UIElements.size(); i++)
-	{
-		delete this->m_UIElements[i];
-	}
-}
 
-void GameState::Render(sf::RenderWindow* _window)
-{
-	_window->draw(*background);
-	for (int i = 0; i < m_UIElements.size() - 1; i++)
-	{
-		_window->draw(*m_UIElements[i]);
-		
-	}
-	for (int i = 0; i < m_UITextElements.size() - 1; i++)
-	{
-		_window->draw(m_UITextElements[i]);
-	}
-
-	_window->draw(m_titleText);
-
-}
-
+//Update
 void GameState::Update(sf::RenderWindow* _window, sf::Vector2f _camerapos)
 {
 	sf::Vector2i pixelPos = sf::Mouse::getPosition(*_window);
@@ -114,28 +104,48 @@ void GameState::Update(sf::RenderWindow* _window, sf::Vector2f _camerapos)
 	}
 }
 
-void GameState::WinScreenRender(sf::RenderWindow* _window)
-{
-	_window->draw(*background);
-	_window->draw(*m_UIElements[4]);
-	_window->draw(m_UITextElements[4]);
-	_window->draw(m_winText);
-}
 
 void GameState::WinScreenUpdate(sf::RenderWindow* _window, sf::Vector2f _centerScreen)
 {
 	sf::Vector2i pixelPos = sf::Mouse::getPosition(*_window);
 	sf::Vector2f worldPos = _window->mapPixelToCoords(pixelPos);
-	m_winText.setPosition(sf::Vector2f(_centerScreen.x, _centerScreen.y));
+	m_winText.setPosition(sf::Vector2f(_centerScreen.x - 230, _centerScreen.y - 300));
 	background->setPosition(sf::Vector2f(_centerScreen.x, _centerScreen.y));
-	m_UIElements[4]->setPosition(sf::Vector2f(_centerScreen.x, _centerScreen.y));
-	m_UITextElements[4].setPosition(sf::Vector2f(_centerScreen.x, _centerScreen.y));
+	m_UIElements[4]->setPosition(sf::Vector2f(_centerScreen.x, _centerScreen.y + 100));
+	m_UITextElements[4].setPosition(sf::Vector2f(_centerScreen.x, _centerScreen.y + 100));
 	if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
 	{
 		if (m_UIElements[4]->getGlobalBounds().contains(sf::Vector2f(worldPos)))
 		{
 			std::cout << "win \n";
 			m_currentState = currentGameState::currentState_Menu;
+			CreateMenu(_centerScreen);
 		}
 	}
+}
+
+//Render
+void GameState::Render(sf::RenderWindow* _window)
+{
+	_window->draw(*background);
+	for (int i = 0; i < m_UIElements.size() - 1; i++)
+	{
+		_window->draw(*m_UIElements[i]);
+		
+	}
+	for (int i = 0; i < m_UITextElements.size() - 1; i++)
+	{
+		_window->draw(m_UITextElements[i]);
+	}
+
+	_window->draw(m_titleText);
+
+}
+
+void GameState::WinScreenRender(sf::RenderWindow* _window)
+{
+	_window->draw(*background);
+	_window->draw(*m_UIElements[4]);
+	_window->draw(m_UITextElements[4]);
+	_window->draw(m_winText);
 }

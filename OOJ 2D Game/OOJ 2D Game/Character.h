@@ -6,6 +6,12 @@
 
 #include "Collisions.h"
 
+enum CharMovement
+{
+	MOVING_LEFT,
+	MOVING_RIGHT,
+	IDLE,
+};
 class Character
 {
 private:
@@ -31,6 +37,11 @@ public:
 	float dashDistance = 10.0;
 	float currentJumpCount = 2;
 	float maxJumpCount = 2;
+	CharMovement currentCharMovement;
+	CharMovement currentCharFacing;
+	sf::IntRect animationRect;
+
+	sf::Clock animationClock;
 
 	//Constructor/Destructors
 	Character();
@@ -38,7 +49,7 @@ public:
 
 	//Functions
 	void Move(float _dt, std::vector<sf::FloatRect> _Collisions);
-	
+	void AnimateCharacter();
 	
 
 	//Update

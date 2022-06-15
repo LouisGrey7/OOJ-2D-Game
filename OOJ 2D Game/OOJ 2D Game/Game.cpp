@@ -142,6 +142,7 @@ void Game::Update()
 						newCharacter.GetCharacterShape()->move(sf::Vector2f(0.0f, -1.5f));
 						newCharacter.charYVelocity = newCharacter.jumpHeight;
 						newCharacter.currentJumpCount--;
+						
 
 					}
 				}
@@ -195,7 +196,7 @@ void Game::Update()
 				this->window->close();
 			}
 			newCamera.Update(window, newCharacter.GetCharacterPosition());
-			newGameState->WinScreenUpdate(window, newCamera.playerCamera->getCenter());
+			newGameState->WinScreenUpdate(window, newCharacter.GetCharacterPosition());
 		}
 	}
 	if (newGameState->m_currentState == newGameState->currentState_Debug)

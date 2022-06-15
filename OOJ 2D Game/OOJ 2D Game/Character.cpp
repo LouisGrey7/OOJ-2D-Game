@@ -7,8 +7,15 @@ void Character::InitCharacter()
 	charShape->setPosition(200.0f, 1250.0f);
 	charShape->setOrigin(charSize.x / 2, charSize.y / 2);
 
-	charTex.loadFromFile("Sprites/MainCharacter.png");
+	charTex.loadFromFile("Sprites/Animations.png");
 
+
+	animationRect.left = 644;
+	animationRect.top = 0;
+	animationRect.width = 21;
+	animationRect.height = 21;
+
+	charShape->setTextureRect(sf::IntRect(animationRect));
 	charShape->setTexture(&charTex);
 
 }
@@ -57,10 +64,53 @@ void Character::Move(float _dt, std::vector<sf::FloatRect> _Collisions)
 
 }
 
+void Character::AnimateCharacter()
+{
+	if (currentCharMovement == CharMovement::IDLE)
+	{
+		animationRect.left = 437;
+		charShape->setTextureRect(sf::IntRect(animationRect));
+
+	}
+	if (currentCharMovement != CharMovement::IDLE)
+	{
+
+		// do animation
+		if (animationClock.getElapsedTime().asSeconds() > 0.16)
+		{
+			if (animationRect.left < 665)
+			{
+				animationRect.left = 644;
+				animationRect.left += 21 + 2;
+			}
+			else if (animationRect.left >= 665)
+			{
+				animationRect.left = 644;
+			}
+
+		charShape->setTextureRect(animationRect);
+		animationClock.restart();
+		}
+	}
+	if (currentCharMovement == CharMovement::MOVING_LEFT)
+	{
+		charShape->setScale(sf::Vector2f(-1.0, 1.0f));
+	}
+	if (currentCharMovement == CharMovement::MOVING_RIGHT)
+	{
+		charShape->setScale(sf::Vector2f(1.0, 1.0f));
+	}
+
+
+}
+
 
 void Character::CharacterInputUpdate(float _dt, std::vector<sf::FloatRect> _Collisions)
 {
 	charMoveVec = sf::Vector2f(0.0f, 0.0f);
+	
+	currentCharMovement = CharMovement::IDLE;
+	
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
 	{
@@ -76,14 +126,17 @@ void Character::CharacterInputUpdate(float _dt, std::vector<sf::FloatRect> _Coll
 	{
 		charMoveVec.x = -1.0f;
 		dashDistance = -10.0f;
+		currentCharMovement = CharMovement::MOVING_LEFT;
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
 	{
 		charMoveVec.x = 1.0f;
 		dashDistance = 10.0f;
+		currentCharMovement = CharMovement::MOVING_RIGHT;
 	}
 	
 	Move(_dt, _Collisions);
+	AnimateCharacter();
 }
 
 void Character::Update(float _dt, std::vector<sf::FloatRect> _Collisions)
