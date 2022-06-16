@@ -21,6 +21,7 @@ Enemies::~Enemies()
 
 void Enemies::DestroyEnemy()
 {
+	delete m_enemyShape;
 }
 
 void Enemies::Update(float _dt, float _movedirx, float _movediry, std::vector<sf::FloatRect> _Collisions, std::vector<sf::FloatRect> _patrolCollide)

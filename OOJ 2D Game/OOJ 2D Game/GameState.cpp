@@ -29,6 +29,7 @@ void GameState::CreateMenu(sf::Vector2f _centerScreen)
 	}
 
 	background = new sf::RectangleShape(sf::Vector2f(2000.0f, 2000.0f));
+	background->setPosition(_centerScreen);
 	background->setFillColor(sf::Color::Cyan);
 	background->setOrigin(sf::Vector2f(1000.0f, 1000.0f));
 
@@ -67,10 +68,8 @@ void GameState::CreateMenu(sf::Vector2f _centerScreen)
 		m_UIElements.push_back(newButton);
 	}
 	m_UITextElements[0].setString("Start Game");
-	m_UITextElements[1].setString("Debug Mode");
-	m_UITextElements[2].setString("Rules");
-	m_UITextElements[3].setString("Quit Game");
-	m_UITextElements[4].setString("Back");
+	m_UITextElements[1].setString("Quit Game");
+	m_UITextElements[2].setString("Back");
 }
 
 void GameState::DestroyMenu()
@@ -91,19 +90,9 @@ void GameState::Update(sf::RenderWindow* _window, sf::Vector2f _camerapos)
 		{
 
 			m_currentState = currentGameState::currentState_Playing;
-			//DestroyMenu();
+			
 		}
 		if (m_UIElements[1]->getGlobalBounds().contains(sf::Vector2f(worldPos)))
-		{
-
-			m_currentState = currentGameState::currentState_Debug;
-
-		}
-		if (m_UIElements[2]->getGlobalBounds().contains(sf::Vector2f(worldPos)))
-		{
-
-		}
-		if (m_UIElements[3]->getGlobalBounds().contains(sf::Vector2f(worldPos)))
 		{
 			_window->close();
 		}
@@ -117,12 +106,14 @@ void GameState::WinScreenUpdate(sf::RenderWindow* _window, sf::Vector2f _centerS
 	sf::Vector2f worldPos = _window->mapPixelToCoords(pixelPos);
 	m_winText.setPosition(sf::Vector2f(_centerScreen.x - 230, _centerScreen.y - 300));
 	background->setPosition(sf::Vector2f(_centerScreen.x, _centerScreen.y));
-	m_UIElements[4]->setPosition(sf::Vector2f(_centerScreen.x, _centerScreen.y + 100));
-	m_UITextElements[4].setPosition(sf::Vector2f(_centerScreen.x, _centerScreen.y + 100));
+	m_UIElements[2]->setPosition(sf::Vector2f(_centerScreen.x, _centerScreen.y + 100));
+	m_UITextElements[2].setPosition(sf::Vector2f(_centerScreen.x, _centerScreen.y + 100));
 	if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
 	{
-		if (m_UIElements[4]->getGlobalBounds().contains(sf::Vector2f(worldPos)))
+		if (m_UIElements[2]->getGlobalBounds().contains(sf::Vector2f(worldPos)))
 		{
+			DestroyMenu();
+			CreateMenu(_centerScreen);
 			std::cout << "win \n";
 			m_currentState = currentGameState::currentState_Menu;
 		}
@@ -150,7 +141,7 @@ void GameState::Render(sf::RenderWindow* _window)
 void GameState::WinScreenRender(sf::RenderWindow* _window)
 {
 	_window->draw(*background);
-	_window->draw(*m_UIElements[4]);
-	_window->draw(m_UITextElements[4]);
+	_window->draw(*m_UIElements[2]);
+	_window->draw(m_UITextElements[2]);
 	_window->draw(m_winText);
 }

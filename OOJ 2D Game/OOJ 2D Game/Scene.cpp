@@ -12,6 +12,15 @@ Scene::Scene(int _levelWidth, int _levelHeight)
 
 Scene::~Scene()
 {
+	m_levelTiles.clear();
+	m_enemySpawnTiles.clear();
+	m_killTiles.clear();
+	m_levelWallColliders.clear();
+	m_patrolCollideTiles.clear();
+	delete newTile;
+	delete m_winTile;
+	delete charSpawnTile;
+
 }
 
 void Scene::LoadScene(std::string _filepath)
@@ -22,6 +31,7 @@ void Scene::LoadScene(std::string _filepath)
 	loadFileStream.open(_filepath, std::ios::in);
 	std::string loadFileString;
 	int lineCount = 0;
+	
 
 	if (loadFileStream.is_open())
 	{
@@ -128,14 +138,30 @@ void Scene::LoadScene(std::string _filepath)
 
 void Scene::UnloadScene()
 {
+
+	for (int i = 0; i < m_levelTiles.size(); i++)
+	{
+		delete m_levelTiles[i];
+		m_levelTiles[i] = nullptr;
+	}
 	m_levelTiles.clear();
+
+	for (int i = 0; i < m_enemySpawnTiles.size(); i++)
+	{
+		delete m_enemySpawnTiles[i];
+		m_enemySpawnTiles[i] = nullptr;
+	}
 	m_enemySpawnTiles.clear();
+	for (int i = 0; i < m_killTiles.size(); i++)
+	{
+		delete m_killTiles[i];
+		m_killTiles[i] = nullptr;
+	}
 	m_killTiles.clear();
 	m_levelWallColliders.clear();
 	m_patrolCollideTiles.clear();
-	delete newTile;
-	delete m_winTile;
-	delete charSpawnTile;
+	
+
 }
 
 

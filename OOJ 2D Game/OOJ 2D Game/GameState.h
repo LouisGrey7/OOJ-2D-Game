@@ -1,5 +1,6 @@
 #pragma once
 #include "SFML/Graphics.hpp"
+#include "Scene.h"
 
 #include <iostream>
 
@@ -24,7 +25,7 @@ public:
 	//Variables
 
 	sf::RectangleShape* background;
-	int uiElementCount = 5;
+	int uiElementCount = 3;
 	currentGameState m_currentState = currentState_Menu;
 	float m_ButtonWidth = 260;
 	float m_ButtonHeight = 80;
@@ -35,8 +36,6 @@ public:
 	sf::Text m_titleText;
 	sf::Font* titleFont;
 	sf::Font* buttonFont;
-
-
 
 	//Constructor and Destructor
 	GameState(sf::Vector2f _centerScreen);

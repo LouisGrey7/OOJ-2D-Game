@@ -46,6 +46,12 @@ void Game::SpawnEnemies()
 
 void Game::UnspawnEnemies()
 {
+
+	for (int i = 0; i < enemies.size(); i++)
+	{
+		delete enemies[i];
+		enemies[i] = nullptr;
+	}
 	enemies.clear();
 }
 
@@ -84,11 +90,17 @@ void Game::WinTile()
 			currentLevel++;
 			std::cout << currentLevel << "\n";
 			
+
 		}
 		else if (currentLevel == 2)
 		{
-			std::cout << "hit \n";		
+			
+			newScene->LoadScene("Scenes/Scene1.txt");
+			SpawnEnemies();
+			SpawnChar();
+			std::cout << "hit \n";
 			newGameState->m_currentState = newGameState->currentState_Win;
+			currentLevel--;
 		}
 	}
 }
@@ -227,8 +239,8 @@ void Game::Render()
 	this->window->clear();
 	if (newGameState->m_currentState == newGameState->currentState_Menu)
 	{
-		newGameState->Render(window);
 		newCamera.Update(window, newCharacter.GetCharacterPosition());
+		newGameState->Render(window);
 	}
 	if (newGameState->m_currentState == newGameState->currentState_Playing)
 	{
