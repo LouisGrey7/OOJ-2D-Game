@@ -44,6 +44,7 @@ public:
 
 	//Functions
 	void CreateMenu(sf::Vector2f _centerScreen);
+	void DestroyMenu();
 
 	//Update
 	void Update(sf::RenderWindow* _window, sf::Vector2f _camerapos);

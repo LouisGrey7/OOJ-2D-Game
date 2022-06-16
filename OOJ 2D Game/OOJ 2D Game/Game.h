@@ -16,6 +16,7 @@
 #include "Enemies.h"
 #include "UI.h"
 #include "GameState.h"
+#include "AudioManager.h"
 
 class Game
 {
@@ -33,6 +34,8 @@ private:
 	Character newCharacter;
 
 	std::vector<Enemies*> enemies;
+
+	AudioManager* newAudioManager = new AudioManager();
 
 	Camera newCamera;
 	

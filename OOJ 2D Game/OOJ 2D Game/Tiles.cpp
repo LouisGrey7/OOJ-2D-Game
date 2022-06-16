@@ -23,7 +23,6 @@ Tiles::Tiles(TileType _type)
 
 	switch (_type)
 	{
-
 	case TILE_GROUND:
 		tileShape->setTexture(&groundTex);
 		break;
@@ -49,11 +48,10 @@ Tiles::Tiles(TileType _type)
 		tileShape->setFillColor(sf::Color::Cyan);
 		break;
 	case TILE_KILLTILE:
-		tileShape->setFillColor(sf::Color::Red);
+		tileShape->setFillColor(sf::Color::Cyan);
 		break;
 	default:
 		break;
-		
 	}
 }
 

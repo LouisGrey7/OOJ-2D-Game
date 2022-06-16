@@ -73,6 +73,12 @@ void GameState::CreateMenu(sf::Vector2f _centerScreen)
 	m_UITextElements[4].setString("Back");
 }
 
+void GameState::DestroyMenu()
+{
+	m_UIElements.clear();
+	m_UITextElements.clear();
+}
+
 
 //Update
 void GameState::Update(sf::RenderWindow* _window, sf::Vector2f _camerapos)
@@ -85,7 +91,7 @@ void GameState::Update(sf::RenderWindow* _window, sf::Vector2f _camerapos)
 		{
 
 			m_currentState = currentGameState::currentState_Playing;
-
+			//DestroyMenu();
 		}
 		if (m_UIElements[1]->getGlobalBounds().contains(sf::Vector2f(worldPos)))
 		{
@@ -119,7 +125,6 @@ void GameState::WinScreenUpdate(sf::RenderWindow* _window, sf::Vector2f _centerS
 		{
 			std::cout << "win \n";
 			m_currentState = currentGameState::currentState_Menu;
-			CreateMenu(_centerScreen);
 		}
 	}
 }

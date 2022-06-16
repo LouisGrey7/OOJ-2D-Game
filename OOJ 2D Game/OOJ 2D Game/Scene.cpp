@@ -130,10 +130,12 @@ void Scene::UnloadScene()
 {
 	m_levelTiles.clear();
 	m_enemySpawnTiles.clear();
+	m_killTiles.clear();
 	m_levelWallColliders.clear();
 	m_patrolCollideTiles.clear();
 	delete newTile;
 	delete m_winTile;
+	delete charSpawnTile;
 }
 
 

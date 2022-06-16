@@ -20,6 +20,10 @@ Game::Game()
 	newScene->LoadScene("Scenes/Scene1.txt");
 	SpawnChar();
 	SpawnEnemies();
+	newAudioManager->bgmVec[0]->setLoop(true);
+	newAudioManager->bgmVec[0]->play();
+	newAudioManager->bgmVec[1]->setLoop(true);
+	newAudioManager->bgmVec[1]->play();
 	
 }
 
@@ -57,7 +61,8 @@ void Game::KillTile()
 		if (tile->tileShape->getGlobalBounds().intersects(newCharacter.GetCharacterShape()->getGlobalBounds()))
 		{
 			SpawnChar();
-
+			newAudioManager->effectPlayer.setBuffer(newAudioManager->sfxBufferVec[2]);
+			newAudioManager->effectPlayer.play();
 		}
 	}
 }
@@ -68,6 +73,8 @@ void Game::WinTile()
 	{
 		newScene->UnloadScene();
 		UnspawnEnemies();
+		newAudioManager->effectPlayer.setBuffer(newAudioManager->sfxBufferVec[3]);
+		newAudioManager->effectPlayer.play();
 
 		if (currentLevel == 1)
 		{
@@ -143,13 +150,21 @@ void Game::Update()
 						newCharacter.charYVelocity = newCharacter.jumpHeight;
 						newCharacter.currentJumpCount--;
 						
+						newAudioManager->effectPlayer.setBuffer(newAudioManager->sfxBufferVec[0]);
+						newAudioManager->effectPlayer.play();
 
 					}
 				}
 				//Dash
 				if (event.key.code == sf::Keyboard::LShift)
 				{
-					newCharacter.charXVelocity = newCharacter.dashDistance;
+					if (newCharacter.currentDashCount > 0)
+					{
+						newCharacter.charXVelocity = newCharacter.dashDistance;
+						newCharacter.currentDashCount--;
+						newAudioManager->effectPlayer.setBuffer(newAudioManager->sfxBufferVec[1]);
+						newAudioManager->effectPlayer.play();
+					}
 				}
 			}
 		}
@@ -174,6 +189,8 @@ void Game::Update()
 			if (newCharacter.GetCharacterShape()->getGlobalBounds().intersects(enemy->EnemyGetShape()->getGlobalBounds()))
 			{
 				SpawnChar();
+				newAudioManager->effectPlayer.setBuffer(newAudioManager->sfxBufferVec[2]);
+				newAudioManager->effectPlayer.play();
 			}
 		}
 	
@@ -211,6 +228,7 @@ void Game::Render()
 	if (newGameState->m_currentState == newGameState->currentState_Menu)
 	{
 		newGameState->Render(window);
+		newCamera.Update(window, newCharacter.GetCharacterPosition());
 	}
 	if (newGameState->m_currentState == newGameState->currentState_Playing)
 	{
@@ -221,10 +239,12 @@ void Game::Render()
 		{
 			enemy->Render(window);
 		}
+		newCamera.Update(window, newCharacter.GetCharacterPosition());
 	}
 	if (newGameState->m_currentState == newGameState->currentState_Win)
 	{
 		newGameState->WinScreenRender(window);
+		newCamera.Update(window, newCharacter.GetCharacterPosition());
 	}
 
 

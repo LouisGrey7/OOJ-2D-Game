@@ -43,6 +43,7 @@ void Character::Move(float _dt, std::vector<sf::FloatRect> _Collisions)
 			charYVelocity = 0.0f;
 			charXVelocity = 0.0f;
 			currentJumpCount = maxJumpCount;
+			currentDashCount = maxDashCount;
 			Collisions::ResolveYCollision(charShape, _Collisions[i], true);
 		}
 		else

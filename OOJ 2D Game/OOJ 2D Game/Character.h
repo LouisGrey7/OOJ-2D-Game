@@ -36,7 +36,9 @@ public:
 	float jumpHeight = -12.0f;
 	float dashDistance = 10.0;
 	float currentJumpCount = 2;
+	float currentDashCount = 1;
 	float maxJumpCount = 2;
+	float maxDashCount = 1;
 	CharMovement currentCharMovement;
 	CharMovement currentCharFacing;
 	sf::IntRect animationRect;
