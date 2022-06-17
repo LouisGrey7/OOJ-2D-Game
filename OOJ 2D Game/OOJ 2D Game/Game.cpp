@@ -24,7 +24,8 @@ Game::Game()
 	newAudioManager->bgmVec[0]->play();
 	newAudioManager->bgmVec[1]->setLoop(true);
 	newAudioManager->bgmVec[1]->play();
-	
+
+	ImGui::SFML::Init(*window);
 }
 
 Game::~Game()
@@ -118,12 +119,14 @@ void Game::UpdateDt()
 
 void Game::Update()
 {
-
+			
+	
 	if (newGameState->m_currentState == newGameState->currentState_Menu)
 	{
 		//Camera
 		while (this->window->pollEvent(this->event))
 		{
+
 			if (this->event.type == sf::Event::Closed)
 			{
 				this->window->close();
@@ -140,6 +143,8 @@ void Game::Update()
 	{
 		while (this->window->pollEvent(this->event))
 		{
+			ImGui::SFML::ProcessEvent(event);
+
 			//Exit Game
 			if (this->event.type == sf::Event::Closed)
 			{
@@ -178,9 +183,39 @@ void Game::Update()
 						newAudioManager->effectPlayer.play();
 					}
 				}
+				if (event.key.code == sf::Keyboard::Tab)
+				{
+
+					debugIsOpen = !debugIsOpen;
+
+				}
 			}
 		}
+		ImGui::SFML::Update(*window, dtClock.restart());
+		if (debugIsOpen)
+		{
+			ImGui::Begin("Debug");
+			ImGui::Text("Character");
+			ImGui::DragFloat("Jump Height", &newCharacter.jumpHeight);
+			ImGui::DragFloat("Dash Distance", &newCharacter.dashDistance);
+			ImGui::DragFloat("Max Jump Count", &newCharacter.maxJumpCount);
+			ImGui::DragFloat("Max Dash Count", &newCharacter.maxDashCount);
+			ImGui::DragFloat("Character Speed", &newCharacter.charSpeed);
 
+			ImGui::Separator();
+			ImGui::Text("Enemy");
+			for (auto* enemy : enemies)
+			{
+				ImGui::DragFloat("Enemy Speed", &enemy->m_enemySpeed);
+			}
+			ImGui::Separator();
+			ImGui::Text("Other");
+			ImGui::Checkbox("Gravity", &gravityEnabled);
+			ImGui::DragFloat("Gravity Value", &newPhysicsSystem.GravityValue);
+			ImGui::DragFloat("Tile Size", &newScene->tileSize);
+
+			ImGui::End();
+		}
 		//Tile Collision
 		KillTile();
 		WinTile();
@@ -214,6 +249,7 @@ void Game::Update()
 		{
 			newPhysicsSystem.UpdateDynamicEnemy(enemy, dt, gravityEnabled);
 		}
+
 
 	}
 	if (newGameState->m_currentState == newGameState->currentState_Win)
@@ -252,13 +288,13 @@ void Game::Render()
 			enemy->Render(window);
 		}
 		newCamera.Update(window, newCharacter.GetCharacterPosition());
+		ImGui::SFML::Render(*window);
 	}
 	if (newGameState->m_currentState == newGameState->currentState_Win)
 	{
 		newGameState->WinScreenRender(window);
 		newCamera.Update(window, newCharacter.GetCharacterPosition());
 	}
-
 
 	this->window->display();
 }

@@ -40,7 +40,6 @@ public:
 	float maxJumpCount = 2;
 	float maxDashCount = 1;
 	CharMovement currentCharMovement;
-	CharMovement currentCharFacing;
 	sf::IntRect animationRect;
 
 	sf::Clock animationClock;

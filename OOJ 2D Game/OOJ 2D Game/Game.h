@@ -6,6 +6,9 @@
 #include "SFML/Audio.hpp"
 #include "SFML/Network.hpp"
 
+#include "imgui.h"
+#include "imgui-SFML.h"
+
 #include <iostream>
 #include <ctime>
 
@@ -28,7 +31,10 @@ private:
 	float dt = 0.0f;
 	bool gravityEnabled = true;
 	int currentLevel = 1;
+	bool debugIsOpen = false;
 	
+	
+
 	GameState* newGameState;
 
 	Character newCharacter;

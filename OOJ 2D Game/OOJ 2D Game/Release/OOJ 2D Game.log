@@ -1,11 +1,24 @@
-﻿  Scene.cpp
-C:\Projects\2D Game Programming\OOJ 2D Game Project\OOJ-2D-Game\OOJ 2D Game\OOJ 2D Game\Scene.cpp(36,22): warning C4018: '<': signed/unsigned mismatch
-C:\Projects\2D Game Programming\OOJ 2D Game Project\OOJ-2D-Game\OOJ 2D Game\OOJ 2D Game\Scene.cpp(153,20): warning C4018: '<': signed/unsigned mismatch
-C:\Projects\2D Game Programming\OOJ 2D Game Project\OOJ-2D-Game\OOJ 2D Game\OOJ 2D Game\Scene.cpp(157,20): warning C4018: '<': signed/unsigned mismatch
-C:\Projects\2D Game Programming\OOJ 2D Game Project\OOJ-2D-Game\OOJ 2D Game\OOJ 2D Game\Scene.cpp(161,20): warning C4018: '<': signed/unsigned mismatch
+﻿  Character.cpp
+C:\Projects\2D Game Programming\OOJ 2D Game Project\OOJ-2D-Game\OOJ 2D Game\OOJ 2D Game\Collisions.h(50,2): warning C4091: 'static ': ignored on left of 'Collisions' when no variable is declared
+C:\Projects\2D Game Programming\OOJ 2D Game Project\OOJ-2D-Game\OOJ 2D Game\OOJ 2D Game\Character.cpp(38,20): warning C4018: '<': signed/unsigned mismatch
+C:\Projects\2D Game Programming\OOJ 2D Game Project\OOJ-2D-Game\OOJ 2D Game\OOJ 2D Game\Character.cpp(58,20): warning C4018: '<': signed/unsigned mismatch
+  Enemies.cpp
+C:\Projects\2D Game Programming\OOJ 2D Game Project\OOJ-2D-Game\OOJ 2D Game\OOJ 2D Game\Collisions.h(50,2): warning C4091: 'static ': ignored on left of 'Collisions' when no variable is declared
+C:\Projects\2D Game Programming\OOJ 2D Game Project\OOJ-2D-Game\OOJ 2D Game\OOJ 2D Game\Enemies.cpp(32,24): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Projects\2D Game Programming\OOJ 2D Game Project\OOJ-2D-Game\OOJ 2D Game\OOJ 2D Game\Enemies.cpp(46,20): warning C4018: '<': signed/unsigned mismatch
+C:\Projects\2D Game Programming\OOJ 2D Game Project\OOJ-2D-Game\OOJ 2D Game\OOJ 2D Game\Enemies.cpp(73,20): warning C4018: '<': signed/unsigned mismatch
+C:\Projects\2D Game Programming\OOJ 2D Game Project\OOJ-2D-Game\OOJ 2D Game\OOJ 2D Game\Enemies.cpp(80,20): warning C4018: '<': signed/unsigned mismatch
+  Game.cpp
+C:\Projects\2D Game Programming\OOJ 2D Game Project\OOJ-2D-Game\OOJ 2D Game\OOJ 2D Game\Collisions.h(50,2): warning C4091: 'static ': ignored on left of 'Collisions' when no variable is declared
+C:\Projects\2D Game Programming\OOJ 2D Game Project\OOJ-2D-Game\OOJ 2D Game\OOJ 2D Game\Game.cpp(40,20): warning C4018: '<': signed/unsigned mismatch
+C:\Projects\2D Game Programming\OOJ 2D Game Project\OOJ-2D-Game\OOJ 2D Game\OOJ 2D Game\Game.cpp(51,20): warning C4018: '<': signed/unsigned mismatch
+  Main.cpp
+C:\Projects\2D Game Programming\OOJ 2D Game Project\OOJ-2D-Game\OOJ 2D Game\OOJ 2D Game\Collisions.h(50,2): warning C4091: 'static ': ignored on left of 'Collisions' when no variable is declared
+  PhysicsSystem.cpp
+C:\Projects\2D Game Programming\OOJ 2D Game Project\OOJ-2D-Game\OOJ 2D Game\OOJ 2D Game\Collisions.h(50,2): warning C4091: 'static ': ignored on left of 'Collisions' when no variable is declared
   Generating code
-  1 of 607 functions ( 0.2%) were compiled, the rest were copied from previous compilation.
+  9 of 2109 functions ( 0.4%) were compiled, the rest were copied from previous compilation.
     0 functions were new in current compilation
-    2 functions had inline decision re-evaluated but remain unchanged
+    17 functions had inline decision re-evaluated but remain unchanged
   Finished generating code
   OOJ 2D Game.vcxproj -> C:\Projects\2D Game Programming\OOJ 2D Game Project\OOJ-2D-Game\OOJ 2D Game\Release\OOJ 2D Game.exe

@@ -14,10 +14,10 @@ private:
 
 public:
 	//Variables
-	int m_enemyDamage = 1;
 	float m_enemySpeed = 200.0f;
 	float enemyYVelocity = 0.0f;
 	bool colliding = false;
+
 	//Initialization
 
 
